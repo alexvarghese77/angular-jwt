@@ -6,23 +6,31 @@ import {
   Validator,
   Validators
 } from '@angular/forms';
+import { LoginService } from './../../service/login.service';
+import { LoginConfig } from './../../interface/login-config';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private loginService: LoginService) {}
   // loginForm = new FormGroup({
   //   email: new FormControl(''),
   //   password: new FormControl('')
   // });
 
   loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
+    email: ['sasef@gmail.com', [Validators.required, Validators.email]],
+    password: ['sasef@gmail.com', Validators.required]
   });
   onsubmit() {
-    alert(JSON.stringify(this.loginForm.value));
+    //alert(JSON.stringify(this.loginForm.value));
+    this.loginService
+      .loginCheck(this.loginForm.value)
+      .subscribe((data: any) => {
+        localStorage.setItem('key', 'Bearer ' + data);
+        console.log(data);
+      });
   }
 }
