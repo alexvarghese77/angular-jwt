@@ -29,6 +29,7 @@ app.post('/api/post', verifyTocken, (req, res) => {
   });
 });
 
+//jwt token will generate after successfull auth
 app.post('/api/login', (req, res) => {
   const user = {
     id: 1,
@@ -37,7 +38,7 @@ app.post('/api/login', (req, res) => {
   };
   console.log(req.body);
 
-  jwt.sign({ user }, 'key', (err, token) => {
+  jwt.sign(req.body, 'key', (err, token) => {
     res.json({
       token
     });

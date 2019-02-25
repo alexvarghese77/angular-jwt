@@ -13,11 +13,13 @@ export class LoginService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'my-auth-token'
+      Authorization: localStorage.getItem('key')
     })
   };
 
   loginCheck(data: LoginConfig) {
+    console.log(localStorage.getItem('key'));
+
     return this.http.post(this.loginUrl, data, this.httpOptions);
   }
 }
